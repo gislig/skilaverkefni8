@@ -1,0 +1,6 @@
+(1) Prompt the user for a file name containing a document collection
+(1.1) If the file does not exist prompt "Documents not found" and quits
+(2) Read the documents and store it as a list
+(3) Keep track of every word in the documents using dictonary
+(3.1) The word would be key, the value would be a set of documents that the word appears in.
+
