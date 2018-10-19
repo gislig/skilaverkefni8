@@ -1,3 +1,5 @@
+import string
+
 # (1) Type in the document
 def open_file_stream():
     try:
@@ -19,20 +21,30 @@ def menu_selection():
     selection = input("> ")
     return selection
 
+def create_word_dict(text_content):
+    word_dict = {}
+
+    document_list = convert_content_to_documents(text_content)
+    for index, value in enumerate(document_list):
+        words = value.strip().split()
+        for word in words:
+            word = word.lower().strip(string.punctuation)
+            if word not in word_dict:
+                word_dict[word] = {index}
+            else:
+                word_dict[word].add(index)
+                
+    return word_dict
+
 # (2.1) Search Documents eftir viðeigandi orðum út frá bili
-def search_documents(doc_list):
+def search_documents(word_dict):
     search_list = input("Enter search words: ")
-    #search_list = ["stock","prices"]
-    search_list = search_list.split(" ")
-    found_in_docs = []
-    for sl in search_list:
-        for index, doc in enumerate(doc_list):
-            if sl in doc:
-                found_in_docs.append(index)
-    if found_in_docs:
-        print(*found_in_docs, sep=" ")
-    else:
-        print("No match.")
+    search_list = search_list.split()
+    for s in search_list:
+        if s in word_dict:
+            print(' '.join(str(n) for n in word_dict[s]))
+        else:
+            print("No match.")
     #print(found_in_docs)
 
 # (2.2) Print out the selection of the document
@@ -47,20 +59,22 @@ def convert_content_to_documents(file_contents):
 
 # Read Article
 def main():
-    file_contents = open_file_stream()
-    if file_contents is None:
+    text_content = open_file_stream()
+    if text_content is None:
         print("Documents not found.")
         return
+    else:
+        word_dict = create_word_dict(text_content)
     while True:
-        document_list = convert_content_to_documents(file_contents)
         selection = menu_selection()
-        #selection = 1
         if selection == '1':
             # Search for specific words in the document
-            search_documents(document_list)
+            search_documents(word_dict)
+            print("selection 1")
         if selection == '2':
             # Print out specific documnent number
-            print_document_number(document_list)
+            #print_document_number(document_list)
+            print("selection 2")
         if selection == '3':
             # Exits the application
             print("Exiting program.")
