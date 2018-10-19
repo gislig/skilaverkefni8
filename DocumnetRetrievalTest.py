@@ -19,8 +19,27 @@ def menu_selection():
     selection = input("> ")
     return selection
 
-# (2.1) Search Documents letar eftir viðeigandi orðum út frá bili
+def convert_content_to_documents(file_contents):
+    document_list = file_contents.split("<NEW DOCUMENT>")
+    return document_list
+
+# (2.1) Search Documents eftir viðeigandi orðum út frá bili
+def search_documents(doc_list):
+    print("Enter search words: stock prices")
+    search_list = ["stock","prices"]
+    found_in_docs = {}
+    for sl in search_list:
+        for index, doc in enumerate(doc_list):
+            if sl in doc:
+                found_in_docs[sl] = index
+    print(found_in_docs)
+    
+
 # (2.2) Prenta út skjalið
+def print_document_number(doc_list):
+    select_doc_number = int(input("Enter document number: "))
+    print("Documnent #{}{}".format(select_doc_number,doc_list[select_doc_number]))
+
 # Read Article
 
 def main():
@@ -29,13 +48,17 @@ def main():
         print("Documents not found.")
         return
     while True:
+        document_list = convert_content_to_documents(file_contents)
         selection = menu_selection()
+        #selection = 1
         if selection == '1':
             # Search for specific words in the document
-            print("Search Documnets")
+            search_documents(document_list)
         if selection == '2':
             # Print out specific documnent number
-            print("Print Documents")
+            print_document_number(document_list)
         if selection == '3':
+            # Exits the application
+            print("Exiting program.")
             return
 main()
