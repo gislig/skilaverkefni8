@@ -19,10 +19,6 @@ def menu_selection():
     selection = input("> ")
     return selection
 
-def convert_content_to_documents(file_contents):
-    document_list = file_contents.split("<NEW DOCUMENT>")
-    return document_list
-
 # (2.1) Search Documents eftir viðeigandi orðum út frá bili
 def search_documents(doc_list):
     print("Enter search words: stock prices")
@@ -33,15 +29,19 @@ def search_documents(doc_list):
             if sl in doc:
                 found_in_docs[sl] = index
     print(found_in_docs)
-    
 
-# (2.2) Prenta út skjalið
+# (2.2) Print out the selection of the document
 def print_document_number(doc_list):
     select_doc_number = int(input("Enter document number: "))
     print("Documnent #{}{}".format(select_doc_number,doc_list[select_doc_number]))
 
-# Read Article
+# (3) Convert the contents into documents
+def convert_content_to_documents(file_contents):
+    document_list = file_contents.split("<NEW DOCUMENT>")
+    return document_list
 
+
+# Read Article
 def main():
     file_contents = open_file_stream()
     if file_contents is None:
