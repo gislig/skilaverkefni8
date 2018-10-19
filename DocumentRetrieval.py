@@ -3,8 +3,8 @@ import string
 # (1) Type in the document
 def open_file_stream():
     try:
-        #filename = input("Document collection: ")
-        filename = "./skilaverkefni8/ap_docs.txt"
+        filename = input("Document collection: ")
+        #filename = "./skilaverkefni8/ap_docs.txt"
         file_string = ""
         with open(filename) as file_stream:
             file_string = file_stream.read()
@@ -42,15 +42,18 @@ def search_documents(word_dict):
     search_list = search_list.split()
     for s in search_list:
         if s in word_dict:
-            print(' '.join(str(n) for n in word_dict[s]))
+            documents_found = ' '.join(str(n) for n in word_dict[s])
+            print("Documents that fit search: {}".format(documents_found))
         else:
             print("No match.")
     #print(found_in_docs)
 
 # (2.2) Print out the selection of the document
-def print_document_number(doc_list):
+def print_document_number(text_content):
     select_doc_number = int(input("Enter document number: "))
-    print("Documnent #{}{}".format(select_doc_number,doc_list[select_doc_number]))
+    document_list = convert_content_to_documents(text_content)
+    document_printout = document_list[select_doc_number]
+    print("Documnent #{}{}".format(select_doc_number,document_printout))
 
 # (3) Convert the contents into documents
 def convert_content_to_documents(file_contents):
@@ -70,11 +73,9 @@ def main():
         if selection == '1':
             # Search for specific words in the document
             search_documents(word_dict)
-            print("selection 1")
         if selection == '2':
             # Print out specific documnent number
-            #print_document_number(document_list)
-            print("selection 2")
+            print_document_number(text_content)
         if selection == '3':
             # Exits the application
             print("Exiting program.")
